@@ -14,13 +14,13 @@ Key concepts from lecture:
     - Continuous Improvement Loop: Evaluate → Analyze → Improve → Augment → Repeat
 
 Instructions:
-    1. Fill in every required section marked with TODO.
+    1. The evaluation pipeline implementation is in this module.
     2. Do NOT change class/function signatures. The optional ``contexts``
        parameter in ``run_full_eval`` is part of the required interface.
     3. Copy this file to solution/solution.py when done.
     4. Run: pytest tests/ -v
 
-The reranking helper is an optional bonus exercise and may remain unimplemented.
+The lexical reranking helper is implemented for the optional bonus exercise.
 """
 
 from __future__ import annotations
@@ -104,7 +104,6 @@ class EvalResult:
         Returns:
             (faithfulness + relevance + completeness) / 3.0
 
-        TODO: Return mean of the three metric scores
         """
         return (self.faithfulness + self.relevance + self.completeness) / 3.0
 
@@ -581,7 +580,7 @@ class BenchmarkRunner:
               - 'regressions': list[str] — names of metrics that regressed
               - 'passed': bool — True if no regressions
 
-        TODO: Compute avg per metric, compare, list regressions, set passed flag
+        Regression uses a strict decrease greater than 0.05.
         """
         metric_names = ("faithfulness", "relevance", "completeness")
         averages: dict[str, float] = {}
@@ -705,7 +704,7 @@ class FailureAnalyzer:
         Returns:
             Markdown table string with a row per failure. Status is always "Open".
 
-        TODO: Build markdown table with failure details + matched suggestions
+        Each generated row starts in the Open status.
         """
         lines = [
             "| Failure ID | Type | Root Cause | Suggested Fix | Status |",
